@@ -2,58 +2,53 @@ import tkinter as tk
 from tkinter import filedialog
 import aspose.cad as cad
 import os
-import threading
 from tkinter import ttk
 import subprocess
+
 def install_python_and_pip():
     try:
-        # Python kurulumu diye kontrol et
         result = subprocess.run(['python', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode != 0:
-            print("Python yüklü değil. Python kuruluyor...")
-            # Python kurulumunu başlat
-            subprocess.run(['python_installer.exe', '/quiet', 'InstallAllUsers=1', 'PrependPath=1'])  # Burada 'python_installer.exe' kurulum dosyasının adını belirtmelisiniz
-        else:
-            print("Python zaten yüklü.")
+            print("Python is not installed. Installing Python...")
 
-        # pip kurulu mu diye kontrol et
+            subprocess.run(['python_installer.exe', '/quiet', 'InstallAllUsers=1', 'PrependPath=1'])  # Specify the name of the installation file 'python_installer.exe' here
+        else:
+            print("Python is already installed.")
+
         result = subprocess.run(['pip', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode != 0:
-            print("pip yüklü değil. pip kuruluyor...")
-            # pip kurulumunu başlat
+            print("pip is not installed. Installing pip...")
             subprocess.run(['python', '-m', 'ensurepip', '--default-pip'])
         else:
-            print("pip zaten yüklü.")
+            print("pip is already installed.")
     except Exception as e:
-        print(f"Hata oluştu: {e}")
+        print(f"An error occurred: {e}")
 
 def update_pip():
     try:
-        # pip güncellemesini başlat
         command = "python -m pip install --upgrade pip"
         result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode == 0:
-            print("pip başarıyla güncellendi.")
+            print("pip has been successfully updated.")
         else:
-            print("pip güncellenirken hata oluştu.")
-            print("Çıktı:")
+            print("An error occurred while updating pip.")
+            print("Output:")
             print(result.stderr)
     except Exception as e:
-        print(f"Hata oluştu: {e}")
+        print(f"An error occurred: {e}")
 
 def install_aspose_cad():
     try:
-        # aspose.cad kütüphanesini kur
         command = "pip install aspose.cad"
         result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode == 0:
-            print("aspose.cad kütüphanesi başarıyla kuruldu.")
+            print("aspose.cad library has been successfully installed.")
         else:
-            print("aspose.cad kütüphanesi kurulurken hata oluştu.")
-            print("Çıktı:")
+            print("An error occurred while installing aspose.cad library.")
+            print("Output:")
             print(result.stderr)
     except Exception as e:
-        print(f"Hata oluştu: {e}")
+        print(f"An error occurred: {e}")
 
 
 if __name__ == "__main__":
