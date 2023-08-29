@@ -5,6 +5,62 @@ import os
 import threading
 from tkinter import ttk
 
+def install_python_and_pip():
+    try:
+        # Python kurulumu diye kontrol et
+        result = subprocess.run(['python', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            print("Python yüklü değil. Python kuruluyor...")
+            # Python kurulumunu başlat
+            subprocess.run(['python_installer.exe', '/quiet', 'InstallAllUsers=1', 'PrependPath=1'])  # Burada 'python_installer.exe' kurulum dosyasının adını belirtmelisiniz
+        else:
+            print("Python zaten yüklü.")
+
+        # pip kurulu mu diye kontrol et
+        result = subprocess.run(['pip', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            print("pip yüklü değil. pip kuruluyor...")
+            # pip kurulumunu başlat
+            subprocess.run(['python', '-m', 'ensurepip', '--default-pip'])
+        else:
+            print("pip zaten yüklü.")
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
+
+def update_pip():
+    try:
+        # pip güncellemesini başlat
+        command = "python -m pip install --upgrade pip"
+        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode == 0:
+            print("pip başarıyla güncellendi.")
+        else:
+            print("pip güncellenirken hata oluştu.")
+            print("Çıktı:")
+            print(result.stderr)
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
+
+def install_aspose_cad():
+    try:
+        # aspose.cad kütüphanesini kur
+        command = "pip install aspose.cad"
+        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode == 0:
+            print("aspose.cad kütüphanesi başarıyla kuruldu.")
+        else:
+            print("aspose.cad kütüphanesi kurulurken hata oluştu.")
+            print("Çıktı:")
+            print(result.stderr)
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
+
+
+if __name__ == "__main__":
+    install_python_and_pip()
+    update_pip()  # pip'i güncelle
+    install_aspose_cad()
+
 class FileConverterApp:
     def __init__(self, root):
         self.root = root
