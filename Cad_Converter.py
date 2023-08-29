@@ -4,7 +4,7 @@ import aspose.cad as cad
 import os
 import threading
 from tkinter import ttk
-
+import subprocess
 def install_python_and_pip():
     try:
         # Python kurulumu diye kontrol et
